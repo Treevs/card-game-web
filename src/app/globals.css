@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --danger: #ef4444;
+    --heal: #10b981;
+    --energy: #f59e0b;
+    --block: #3b82f6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Card Animations */
+@keyframes cardHover {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
+@keyframes cardPlay {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50px) scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100px) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes damageNumber {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-50px) scale(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes energyGlow {
+    0%,
+    100% {
+        box-shadow: 0 0 5px var(--energy);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--energy), 0 0 30px var(--energy);
+    }
+}
+
+@keyframes hpBarFill {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: var(--hp-percentage);
+    }
+}
+
+@keyframes cardDraw {
+    0% {
+        transform: translateY(100px) rotate(180deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Card hover effects */
+.card-hover {
+    animation: cardHover 0.2s ease-out forwards;
+}
+
+.card-play {
+    animation: cardPlay 0.5s ease-out forwards;
+}
+
+.damage-number {
+    animation: damageNumber 1s ease-out forwards;
+}
+
+.energy-glow {
+    animation: energyGlow 2s ease-in-out infinite;
+}
+
+.hp-bar-fill {
+    animation: hpBarFill 0.5s ease-out forwards;
+}
+
+.card-draw {
+    animation: cardDraw 0.3s ease-out forwards;
+}
+
+.pulse {
+    animation: pulse 0.5s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1f2937;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
 }
