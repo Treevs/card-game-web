@@ -1,13 +1,17 @@
 "use client";
 
+import { ApolloProvider } from "@apollo/client";
+import { apolloClient } from "@/lib/apollo-client";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Navbar } from "./Navbar";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     return (
-        <AuthProvider>
-            <Navbar />
-            {children}
-        </AuthProvider>
+        <ApolloProvider client={apolloClient}>
+            <AuthProvider>
+                <Navbar />
+                {children}
+            </AuthProvider>
+        </ApolloProvider>
     );
 }
