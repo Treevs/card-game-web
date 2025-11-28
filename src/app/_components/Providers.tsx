@@ -1,6 +1,6 @@
 "use client";
 
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 import { apolloClient } from "@/lib/apollo-client";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Navbar } from "./Navbar";

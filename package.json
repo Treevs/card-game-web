@@ -5,10 +5,12 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start"
+    "start": "next start",
+    "codegen": "graphql-codegen"  
   },
   "dependencies": {
     "@apollo/client": "^4.0.9",
+    "@graphql-codegen/cli": "^6.1.0",
     "graphql": "^16.12.0",
     "next": "15.5.6",
     "react": "19.1.0",
