@@ -1,5 +1,12 @@
 "use client";
 
+import {
+    MeQuery,
+    useCreateAccountMutation,
+    useLoginMutation,
+    useLogoutMutation,
+    useMeQuery,
+} from "@/generated/generates";
 import React, {
     createContext,
     useContext,
@@ -8,102 +15,55 @@ import React, {
     ReactNode,
 } from "react";
 
-interface User {
-    id: string;
-    username: string;
-    email: string;
-}
-
 interface AuthContextType {
-    user: User | null;
+    user: MeQuery["me"] | null;
     loading: boolean;
-    login: (username: string, password: string) => Promise<void>;
-    register: (
-        username: string,
-        email: string,
-        password: string
-    ) => Promise<void>;
-    logout: () => Promise<void>;
-    checkSession: () => Promise<void>;
+    login: (username: string, password: string) => void;
+    register: (username: string, email: string, password: string) => void;
+    logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loginMutation] = useLoginMutation();
+    const [createAccountMutation] = useCreateAccountMutation();
+    const [logoutMutation] = useLogoutMutation();
+    const { data, loading } = useMeQuery();
 
-    const checkSession = async () => {
-        try {
-            const response = await fetch("/api/auth/session");
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data.user);
-            } else {
-                setUser(null);
-            }
-        } catch (error) {
-            console.error("Session check failed:", error);
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const login = async (username: string, password: string) => {
-        const response = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
+    const login = (username: string, password: string) => {
+        loginMutation({
+            variables: {
+                email: username,
+                password: password,
             },
-            body: JSON.stringify({ username, password }),
+            refetchQueries: ["Me"],
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || "Login failed");
-        }
-
-        setUser(data.user);
     };
 
-    const register = async (
-        username: string,
-        email: string,
-        password: string
-    ) => {
-        const response = await fetch("/api/auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
+    const register = (username: string, email: string, password: string) => {
+        createAccountMutation({
+            variables: {
+                username: username,
+                email: email,
+                password: password,
             },
-            body: JSON.stringify({ username, email, password }),
+            refetchQueries: ["Me"],
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || "Registration failed");
-        }
-
-        setUser(data.user);
     };
 
-    const logout = async () => {
-        await fetch("/api/auth/logout", {
-            method: "POST",
+    const logout = () => {
+        logoutMutation({
+            refetchQueries: ["Me"],
         });
-        setUser(null);
     };
 
-    useEffect(() => {
-        checkSession();
-    }, []);
+    const user = data?.me;
+    console.log(user);
 
     return (
         <AuthContext.Provider
-            value={{ user, loading, login, register, logout, checkSession }}
+            value={{ user, loading, login, register, logout }}
         >
             {children}
         </AuthContext.Provider>
