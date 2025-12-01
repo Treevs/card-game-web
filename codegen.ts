@@ -3,7 +3,7 @@ import { CodegenConfig } from "@graphql-codegen/cli";
 const config: CodegenConfig = {
     schema: "http://localhost:4000/graphql",
     documents: ["**/graphql/*.graphql"],
-    ignoreNoDocuments: true, // for better experience with the watcher
+    ignoreNoDocuments: true,
     generates: {
         "src/generated/generates.ts": {
             plugins: [
@@ -19,6 +19,11 @@ const config: CodegenConfig = {
                 exposeFetcher: true,
                 exposeQueryKeys: true,
                 exposeQueryOptions: true,
+                enumsAsTypes: true,
+                maybeValue: "T | null",
+                inputMaybeValue: "T | null | undefined",
+                scalars: {},
+                skipTypename: false,
             },
         },
     },

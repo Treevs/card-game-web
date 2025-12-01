@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "./AuthModal";
 
@@ -30,9 +31,24 @@ export function Navbar() {
                     <div className="flex items-center justify-between h-16">
                         {/* Logo/Brand */}
                         <div className="flex-shrink-0">
-                            <h1 className="text-xl font-bold text-white">
+                            <Link
+                                href="/"
+                                className="text-xl font-bold text-white hover:text-gray-300 transition-colors"
+                            >
                                 Card Game
-                            </h1>
+                            </Link>
+                        </div>
+
+                        {/* Navigation Links */}
+                        <div className="flex-1 flex items-center justify-center gap-6">
+                            {user && (
+                                <Link
+                                    href="/collection"
+                                    className="text-white hover:text-gray-300 transition-colors text-sm font-medium"
+                                >
+                                    Collection
+                                </Link>
+                            )}
                         </div>
 
                         {/* Right side - Auth buttons */}

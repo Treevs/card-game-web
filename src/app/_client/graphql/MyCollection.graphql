@@ -1,0 +1,29 @@
+fragment CollectionCard on Card {
+    id
+    cost
+    description
+    health
+    image
+    monsterType
+    name
+    rarity
+    strength
+    subType
+    type
+}
+
+query MyCollection {
+    me {
+        _id
+        username
+        collection {
+            id
+            cards {
+                card {
+                    ...CollectionCard
+                }
+                quantity
+            }
+        }
+    }
+}

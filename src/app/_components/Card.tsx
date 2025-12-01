@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { Card as CardType } from "@/types";
 import { useGame } from "@/contexts/GameContext";
+import { type CollectionCardFragment } from "@/generated/generates";
 
 interface CardProps {
-    card: CardType;
+    card: CollectionCardFragment;
     isPlayable?: boolean;
     onClick?: () => void;
 }
@@ -23,7 +23,7 @@ export function Card({ card, isPlayable = true, onClick }: CardProps) {
 
     const getCardColor = () => {
         switch (card.type) {
-            case "attack":
+            case "monster":
                 return "bg-red-500/20 border-red-500/50";
             case "skill":
                 return "bg-blue-500/20 border-blue-500/50";
@@ -72,7 +72,7 @@ export function Card({ card, isPlayable = true, onClick }: CardProps) {
                 <h3 className={`text-lg font-bold ${getRarityColor()}`}>
                     {card.name}
                 </h3>
-                {card.creatureHp && card.creatureAttack && (
+                {card.health && card.strength && (
                     <div className="text-xs text-green-400 mt-1">Summon</div>
                 )}
             </div>
@@ -87,25 +87,25 @@ export function Card({ card, isPlayable = true, onClick }: CardProps) {
 
             {/* Card Stats */}
             <div className="absolute bottom-2 right-2 flex gap-2">
-                {card.creatureHp && card.creatureAttack ? (
+                {card.health && card.strength ? (
                     <>
                         <div className="bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
-                            {card.creatureHp} HP
+                            {card.health} HP
                         </div>
                         <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
-                            {card.creatureAttack} ATK
+                            {card.strength} ATK
                         </div>
                     </>
                 ) : (
                     <>
-                        {card.damage && (
+                        {card.strength && (
                             <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
-                                {card.damage}
+                                {card.strength}
                             </div>
                         )}
-                        {card.block && (
+                        {card.health && (
                             <div className="bg-blue-600 text-white px-2 py-1 rounded text-xs font-bold">
-                                {card.block}
+                                {card.health}
                             </div>
                         )}
                     </>
