@@ -1,0 +1,19 @@
+fragment DeckCard on DeckCard {
+    cardId
+    quantity
+}
+
+fragment DeckInfo on Deck {
+    id
+    name
+    heroCardId
+    cards {
+        ...DeckCard
+    }
+}
+
+query Deck($id: ID!) {
+    deck(id: $id) {
+        ...DeckInfo
+    }
+}

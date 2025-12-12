@@ -105,7 +105,7 @@ export default function CollectionPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                     {cards.map(({ card, quantity }) => (
                         <div key={card.id} className="relative">
-                            <Card card={card} isPlayable={false} />
+                            <Card card={card} isPlayable={true} />
                             {/* Quantity Badge */}
                             <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg border-2 border-gray-900">
                                 {quantity}

@@ -1,0 +1,3 @@
+mutation DeleteDeck($id: ID!) {
+    deleteDeck(id: $id)
+}

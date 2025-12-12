@@ -1,0 +1,23 @@
+fragment DeckCard on DeckCard {
+    cardId
+    quantity
+}
+
+fragment DeckInfo on Deck {
+    id
+    name
+    heroCardId
+    cards {
+        ...DeckCard
+    }
+}
+
+query MyDecks {
+    me {
+        _id
+        username
+        decks {
+            ...DeckInfo
+        }
+    }
+}
