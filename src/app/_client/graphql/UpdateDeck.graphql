@@ -1,16 +1,10 @@
 mutation UpdateDeck(
-    $id: ID!
+    $updateDeckId: ID!
     $name: String
-    $heroCardId: ID
     $cards: [DeckCardInput!]
+    $hero: ID
 ) {
-    updateDeck(id: $id, name: $name, heroCardId: $heroCardId, cards: $cards) {
+    updateDeck(id: $updateDeckId, name: $name, cards: $cards, hero: $hero) {
         id
-        name
-        heroCardId
-        cards {
-            cardId
-            quantity
-        }
     }
 }

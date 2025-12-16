@@ -1,14 +1,28 @@
-fragment DeckCard on DeckCard {
-    cardId
-    quantity
+fragment Card on Card {
+    id
+    name
+    description
+    image
+    rarity
+    cost
+    type
+    subType
+    monsterType
+    strength
+    health
 }
 
 fragment DeckInfo on Deck {
     id
     name
-    heroCardId
+    hero {
+        ...Card
+    }
     cards {
-        ...DeckCard
+        card {
+            ...Card
+        }
+        quantity
     }
 }
 

@@ -1,19 +1,29 @@
-fragment DeckCard on DeckCard {
-    cardId
-    quantity
-}
-
-fragment DeckInfo on Deck {
+fragment Card on Card {
     id
     name
-    heroCardId
-    cards {
-        ...DeckCard
-    }
+    description
+    image
+    rarity
+    cost
+    type
+    subType
+    monsterType
+    strength
+    health
 }
 
-query Deck($id: ID!) {
-    deck(id: $id) {
-        ...DeckInfo
+query Deck($deckId: ID!) {
+    deck(id: $deckId) {
+        id
+        name
+        cards {
+            card {
+                ...Card
+            }
+            quantity
+        }
+        hero {
+            ...Card
+        }
     }
 }

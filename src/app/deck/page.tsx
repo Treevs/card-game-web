@@ -155,6 +155,44 @@ export default function DeckPage() {
         });
     };
 
+    // Fill card to deck (adds as many as possible up to 100 cards)
+    const fillCardToDeck = (cardId: string) => {
+        const collectionCards = data?.me?.collection?.cards ?? [];
+        const cardEntry = collectionCards.find((ce) => ce.card.id === cardId);
+        if (!cardEntry) return;
+
+        const card = cardEntry.card;
+        const isHero = isHeroCard(card);
+
+        // Only work with support cards (not heroes)
+        if (isHero) {
+            return;
+        }
+
+        const currentQuantity = currentDeck.cards.get(cardId) ?? 0;
+        const remainingSlots = 100 - deckStats.totalCards;
+
+        // If deck is already full, nothing to do
+        if (remainingSlots <= 0) {
+            return;
+        }
+
+        // Calculate how many we can add
+        const availableInCollection = cardEntry.quantity - currentQuantity;
+        const canAdd = Math.min(remainingSlots, availableInCollection);
+
+        // If we can't add any, return
+        if (canAdd <= 0) {
+            return;
+        }
+
+        setCurrentDeck((prev) => {
+            const newCards = new Map(prev.cards);
+            newCards.set(cardId, currentQuantity + canAdd);
+            return { ...prev, cards: newCards };
+        });
+    };
+
     // Set hero
     const setHero = (cardId: string) => {
         if (currentDeck.cards.has(cardId)) {
@@ -602,6 +640,16 @@ export default function DeckPage() {
                                     deckStats.totalCards < 100;
                                 const isInDeck = deckQuantity > 0;
 
+                                // Calculate if fill button should be enabled
+                                const remainingSlots =
+                                    100 - deckStats.totalCards;
+                                const availableInCollection =
+                                    collectionQuantity - deckQuantity;
+                                const canFill =
+                                    !isHero &&
+                                    remainingSlots > 0 &&
+                                    availableInCollection > 0;
+
                                 return (
                                     <div key={card.id} className="relative">
                                         <Card
@@ -639,6 +687,19 @@ export default function DeckPage() {
                                                     </span>
                                                 </div>
                                             )}
+                                        {canFill && (
+                                            <div className="mt-2 flex justify-center">
+                                                <button
+                                                    onClick={() =>
+                                                        fillCardToDeck(card.id)
+                                                    }
+                                                    className="px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white rounded text-xs font-medium transition-colors"
+                                                    disabled={!canFill}
+                                                >
+                                                    Fill
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             }

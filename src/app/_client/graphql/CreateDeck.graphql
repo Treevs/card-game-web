@@ -1,15 +1,5 @@
-mutation CreateDeck(
-    $name: String!
-    $heroCardId: ID!
-    $cards: [DeckCardInput!]!
-) {
-    createDeck(name: $name, heroCardId: $heroCardId, cards: $cards) {
+mutation CreateDeck($name: String!, $cards: [DeckCardInput!]!, $hero: ID!) {
+    createDeck(name: $name, cards: $cards, hero: $hero) {
         id
-        name
-        heroCardId
-        cards {
-            cardId
-            quantity
-        }
     }
 }
