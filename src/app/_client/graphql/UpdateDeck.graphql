@@ -1,0 +1,10 @@
+mutation UpdateDeck(
+    $updateDeckId: ID!
+    $name: String
+    $cards: [DeckCardInput!]
+    $hero: ID
+) {
+    updateDeck(id: $updateDeckId, name: $name, cards: $cards, hero: $hero) {
+        id
+    }
+}

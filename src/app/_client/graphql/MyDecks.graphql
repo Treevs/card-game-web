@@ -1,0 +1,37 @@
+fragment Card on Card {
+    id
+    name
+    description
+    image
+    rarity
+    cost
+    type
+    subType
+    monsterType
+    strength
+    health
+}
+
+fragment DeckInfo on Deck {
+    id
+    name
+    hero {
+        ...Card
+    }
+    cards {
+        card {
+            ...Card
+        }
+        quantity
+    }
+}
+
+query MyDecks {
+    me {
+        _id
+        username
+        decks {
+            ...DeckInfo
+        }
+    }
+}

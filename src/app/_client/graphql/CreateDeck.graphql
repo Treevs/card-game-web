@@ -1,0 +1,5 @@
+mutation CreateDeck($name: String!, $cards: [DeckCardInput!]!, $hero: ID!) {
+    createDeck(name: $name, cards: $cards, hero: $hero) {
+        id
+    }
+}

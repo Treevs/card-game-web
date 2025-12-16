@@ -42,12 +42,20 @@ export function Navbar() {
                         {/* Navigation Links */}
                         <div className="flex-1 flex items-center justify-center gap-6">
                             {user && (
-                                <Link
-                                    href="/collection"
-                                    className="text-white hover:text-gray-300 transition-colors text-sm font-medium"
-                                >
-                                    Collection
-                                </Link>
+                                <>
+                                    <Link
+                                        href="/collection"
+                                        className="text-white hover:text-gray-300 transition-colors text-sm font-medium"
+                                    >
+                                        Collection
+                                    </Link>
+                                    <Link
+                                        href="/deck"
+                                        className="text-white hover:text-gray-300 transition-colors text-sm font-medium"
+                                    >
+                                        Deck
+                                    </Link>
+                                </>
                             )}
                         </div>
 
